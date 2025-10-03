@@ -1,12 +1,13 @@
-// src/components/MobileNavbar.jsx
-import { Home, ChefHat, Coffee, User } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { Home, ChefHat, Coffee, User, Star } from 'lucide-react';
 
-export default function MobileNavbar({ currentPage, onNavigate }) {
+export default function MobileNavbar() {
   const navItems = [
-    { id: 'home', label: 'Beranda', icon: Home },
-    { id: 'makanan', label: 'Makanan', icon: ChefHat },
-    { id: 'minuman', label: 'Minuman', icon: Coffee },
-    { id: 'profile', label: 'Profile', icon: User }
+    { to: '/home', label: 'Beranda', icon: Home },
+    { to: '/makanan', label: 'Makanan', icon: ChefHat },
+    { to: '/minuman', label: 'Minuman', icon: Coffee },
+    { to: '/favorites', label: 'Favorit', icon: Star },
+    { to: '/profile', label: 'Profile', icon: User }
   ];
 
   return (
@@ -14,25 +15,30 @@ export default function MobileNavbar({ currentPage, onNavigate }) {
       <div className="flex items-center justify-around max-w-sm mx-auto">
         {navItems.map((item) => {
           const IconComponent = item.icon;
-          const isActive = currentPage === item.id;
           
           return (
-            <button
-              key={item.id}
-              onClick={() => onNavigate(item.id)}
-              className={`flex flex-col items-center py-2 px-3 transition-colors duration-200 ${
-                isActive ? 'text-blue-600' : 'text-gray-400'
-              }`}
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `flex flex-col items-center py-2 px-3 transition-colors duration-200 ${
+                  isActive ? 'text-blue-600' : 'text-gray-400'
+                }`
+              }
             >
-              <IconComponent 
-                size={20} 
-                className="mb-1"
-                strokeWidth={isActive ? 2 : 1.5}
-              />
-              <span className="text-xs font-medium">
-                {item.label}
-              </span>
-            </button>
+              {({ isActive }) => (
+                <>
+                  <IconComponent 
+                    size={20} 
+                    className="mb-1"
+                    strokeWidth={isActive ? 2 : 1.5}
+                  />
+                  <span className="text-xs font-medium">
+                    {item.label}
+                  </span>
+                </>
+              )}
+            </NavLink>
           );
         })}
       </div>

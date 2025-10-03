@@ -1,12 +1,14 @@
-// src/components/DesktopNavbar.jsx
+import { NavLink } from 'react-router-dom';
 import logoUrl from '../../assets/LOGORN.png';
+import { Star } from 'lucide-react';
 
-export default function DesktopNavbar({ currentPage, onNavigate }) {
+export default function DesktopNavbar() {
   const navItems = [
-    { id: 'home', label: 'Beranda' },
-    { id: 'makanan', label: 'Makanan' },
-    { id: 'minuman', label: 'Minuman' },
-    { id: 'profile', label: 'Profile' }
+    { to: '/home', label: 'Beranda' },
+    { to: '/makanan', label: 'Makanan' },
+    { to: '/minuman', label: 'Minuman' },
+    { to: '/favorites', label: 'Favorit'},
+    { to: '/profile', label: 'Profile' }
   ];
 
   return (
@@ -39,17 +41,20 @@ export default function DesktopNavbar({ currentPage, onNavigate }) {
           {/* Navigation Links */}
           <div className="flex items-center space-x-10">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => onNavigate(item.id)}
-                className={`px-4 py-3 text-base font-medium transition-all duration-200 border-b-2 ${
-                  currentPage === item.id
-                    ? 'text-blue-600 border-blue-500'
-                    : 'text-slate-600 border-transparent hover:text-blue-500 hover:border-blue-300'
-                }`}
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-3 text-base font-medium transition-all duration-200 border-b-2 ${
+                    isActive
+                      ? 'text-blue-600 border-blue-500'
+                      : 'text-slate-600 border-transparent hover:text-blue-500 hover:border-blue-300'
+                  }`
+                }
               >
+                {item.icon && <item.icon className="w-4 h-4 mr-2" />} 
                 {item.label}
-              </button>
+              </NavLink>
             ))}
           </div>
          

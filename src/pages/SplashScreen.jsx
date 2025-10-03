@@ -1,5 +1,6 @@
 // src/pages/SplashScreen.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackgroundPattern from '../components/splash/BackgroundPattern';
 import FloatingElements from '../components/splash/FloatingElements';
 import LogoContainer from '../components/splash/LogoContainer';
@@ -7,11 +8,12 @@ import TitleSection from '../components/splash/TitleSection';
 import LoadingAnimation from '../components/splash/LoadingAnimation';
 import Footer from '../components/splash/Footer';
 
-export default function SplashScreen({ onComplete }) {
+export default function SplashScreen() {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [fadeIn, setFadeIn] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,7 +29,7 @@ export default function SplashScreen({ onComplete }) {
             setTimeout(() => {
               setIsVisible(false);
               setTimeout(() => {
-                if (typeof onComplete === 'function') onComplete();
+                navigate('/home');
               }, 100);
             }, 600);
           }, 800);
@@ -39,7 +41,7 @@ export default function SplashScreen({ onComplete }) {
     }, 120);
 
     return () => clearInterval(interval);
-  }, [onComplete]);
+  }, [navigate]);
 
   if (!isVisible) return null;
 
